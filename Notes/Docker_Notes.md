@@ -96,7 +96,51 @@ COPY ./html/ /usr/local/apache2/htdocs/
   - Last item is the name of the image
 - Can test if the container is running by going to the localhost in the web browser
   - `http://localhost:8080/`
+
+
+
+# Start / Stop the Container
+
+- Start the server container: `docker start hello-docker-container`
 - Stop the server container with `CTRL + C`
+- Restart the container: `docker restart hello-docker-container`
+- Can also use the first 3 letters of the container ID
+  - Example: `docker start f6c`
+
+
+
+# Updating a Container
+
+- Build a new image for the new container with the updated version
+  - First update or make a change to the html file
+  - Build a new docker image with the new version number
+    - `docker build -t hello-docker:1.0.1 .`
+  - Create/run the new container
+    - `docker run --name containerName -p portAddress imageName`
+    - `docker run --name hello-docker-container2 -p 8080:80 hello-docker:1.0.1`
+- Start & stop as needed
+- Can stop new one and start old version to roll back to prior version of web page
+
+
+
+# Clean Up Containers & Images
+
+- Remove a container
+  - `docker rm id`
+  - `docker rm f6c`
+- Get only the IDs of containers
+  - `docker ps -a -q`
+  - adding the `-q` gives only the IDs
+- Remove more than one container at a time
+  - `docker rm $(docker ps -a -q)`
+  - The `$()` runs the command and feeds the results into the first command
+- Remove an image
+  - `docker rmi id`
+  - `docker rmi a13`
+- Get only the IDs of images
+  - `docker images -q`
+- Remove all images
+  - `docker rmi $(docker images -q)`
 
 
 
