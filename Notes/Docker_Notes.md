@@ -1,10 +1,15 @@
+
 # Docker 
 
 - Going through the iamtimcorey Docker course
 
 
 
-# Installation
+
+
+# Setup And Terms
+
+### Installation
 
 - download from docker website
 - wait for install
@@ -17,7 +22,7 @@
 
 
 
-# Terms
+### Terms
 
 - Image
   - Blueprint
@@ -33,7 +38,7 @@
 
 
 
-# Docker Commands
+### Docker Commands
 
 - Open Powershell
 - List Images currently on machine
@@ -44,7 +49,11 @@
 
 
 
-# Hello World Docker Container
+
+
+# Building a Container
+
+### Hello World Docker Container
 
 - shortcut creation method
   - run: `docker run hello-world`
@@ -55,7 +64,7 @@
 
 
 
-# Building a Image & Container
+### Building a Image & Container
 
 - `cd` into where you want your container
 - Create a project structure
@@ -99,7 +108,10 @@ COPY ./html/ /usr/local/apache2/htdocs/
 
 
 
-# Start / Stop the Container
+
+# Operating the Container
+
+### Start / Stop the Container
 
 - Start the server container: `docker start hello-docker-container`
 - Stop the server container with `CTRL + C`
@@ -109,7 +121,7 @@ COPY ./html/ /usr/local/apache2/htdocs/
 
 
 
-# Updating a Container
+### Updating a Container
 
 - Build a new image for the new container with the updated version
   - First update or make a change to the html file
@@ -123,7 +135,7 @@ COPY ./html/ /usr/local/apache2/htdocs/
 
 
 
-# Clean Up Containers & Images
+### Clean Up Containers & Images
 
 - Remove a container
   - `docker rm id`
@@ -143,6 +155,69 @@ COPY ./html/ /usr/local/apache2/htdocs/
   - `docker rmi $(docker images -q)`
 
 
+
+
+
+# Docker File Components
+
+### FROM
+
+- [From Documentation](https://docs.docker.com/reference/dockerfile#from)
+- Can specify the image name
+  - Use the `AS` keyword
+  - `FROM httpd:alpine AS base`
+- Generally the `FROM` command is the first line in a docker file
+  - Only `ARG` can come before 
+
+
+
+### COPY
+
+- [Copy Documentation](https://docs.docker.com/engine/reference/builder/#copy)
+- Give copy the SOURCE and then the destination
+- Copy everything from the source and put into the destination
+- can specify which FROM to copy 
+  - `COPY --from=base /usr/local/apache2/ /app/`
+  - Used a lot for build process work
+  - Example:
+    - Create the C# Build in 1 image
+    - Then From that image, copy the published files (.dll) and copy into the release image
+    - Then the release image does not have the source code
+
+
+
+### WORKDIR
+
+- [Workdir Documentation](https://docs.docker.com/engine/reference/builder/#workdir)
+- Sets the working directory to use in our container
+- For inside the container
+- Ex: `WORKDIR /usr/local/apache2/htdocs/`
+- If the folder directory doesn't exist, it will be made
+- can be called with just `.` then
+
+
+
+### EXPOSE
+
+- [Expose Documentation](https://docs.docker.com/engine/reference/builder/#expose)
+- Just documentation, doesn't do anything
+- Expose is not the same as `-p` in the run
+- Can specify the protocol
+
+
+
+### RUN
+
+- [Run Documentation](https://docs.docker.com/engine/reference/builder/#run)
+- runs commands on the image
+- On Windows `\` is an escape character so need to use 2 `\\`
+
+
+
+### VOLUME
+
+- [Volume Documentation](https://docs.docker.com/engine/reference/builder/#volume)
+- 
 
 
 
